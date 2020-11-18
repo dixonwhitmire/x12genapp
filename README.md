@@ -54,11 +54,4 @@ pytest
 ```
 
 ## Container Support
-
-
-
-
-To activate the virtual environment
-pip install -e . .[test]
-pytest
-```
+Coming soon!
