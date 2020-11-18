@@ -33,10 +33,11 @@ Create the local development environment within a terminal (Linux based systems)
 ```
 cd <desired project base directory>
 git clone <project url>
+cd <project directory>
 python3 -m venv env
 ```
 
-Activate the virtual environment . . . 
+Activate the project's virtual environment . . . 
 On Windows
 ```
 env\Scripts\activate
