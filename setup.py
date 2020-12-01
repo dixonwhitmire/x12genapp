@@ -15,7 +15,7 @@ setup(
         'simplejson==3.17.2'
     ],
     extras_require={
-      'test': ['pytest==6.1.2','coverage==5.3']
+      'test': ['pytest==6.1.2', 'coverage==5.3']
     },
     classifiers=[
         "Domain :: Health Care :: X12"
