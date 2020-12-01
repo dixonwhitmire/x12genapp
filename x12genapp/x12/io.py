@@ -1,38 +1,6 @@
-import collections
 import contextlib
 
-SUPPORTED_TRANSACTION_CODES = ['270']
-
-X12Demographics = collections.namedtuple('X12Demographics', [
-    'trace_number'
-    'last_name',
-    'first_name',
-    'middle_name',
-    'suffix',
-    'identification_code_type',
-    'identification_code',
-    'group_number',
-    'address_line_1',
-    'address_line_2',
-    'city',
-    'state',
-    'zip_code',
-    'birth_date'
-])
-
-
-class UnsupportedTransactionException(Exception):
-    """
-    Indicates that a X12 Transaction Type is not currently supported
-    """
-    pass
-
-
-class InvalidControlSegment(Exception):
-    """
-    Raised when a X12 message as an invalid control segment (ISA, GS, GE, or IEA)
-    """
-    pass
+from x12genapp.x12 import UnsupportedTransactionException, InvalidControlSegment, SUPPORTED_TRANSACTION_CODES
 
 
 class X12MessageDelimiters:
@@ -47,7 +15,6 @@ class X12MessageDelimiters:
     def parse_isa_segment(self, x12_message):
         """
         Parses the ISA "control" segment and sets the delimiters used in the x12 message.
-        The x12 message is assumged to be a "single line" with no new-lines.
         :param x12_message: The x12 message/payload
         """
         isa_segment = x12_message[0:self.ISA_SEGMENT_LENGTH]
