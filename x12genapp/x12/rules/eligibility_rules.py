@@ -15,6 +15,7 @@ def parse_transaction_set(segment_data, data_context, data_cache):
     data_context['has_dependent'] = False
     data_cache['subscriber'] = {field: None for field in X12DemographicFields}
     data_cache['dependent'] = {field: None for field in X12DemographicFields}
+    data_context['is_transaction_complete'] = False
 
 
 @matches_segment('HL', {3: '22'})
@@ -121,7 +122,6 @@ def parse_n4_segment(segment_data, data_context, data_cache):
     :param segment_data:
     :param data_context:
     :param data_cache:
-    :return:
     """
     model = data_cache['subscriber'] if data_context['is_subscriber'] else data_cache['dependent']
     model['city'] = segment_data[1]
@@ -133,10 +133,14 @@ def parse_n4_segment(segment_data, data_context, data_cache):
         model['zip_code'] = segment_data[3]
 
 
+@matches_segment('DMG')
 def parse_dmg_segment(segment_data, data_context, data_cache):
     """
     Parses a DMG segment containing additional demographics (birth data and gender)
     Example: DMG*D8*19900515*F~
+    :param segment_data:
+    :param data_context:
+    :param data_cache:
     """
     model = data_cache['subscriber'] if data_context['is_subscriber'] else data_cache['dependent']
 
@@ -145,3 +149,14 @@ def parse_dmg_segment(segment_data, data_context, data_cache):
 
     if len(segment_data) >= 4:
         model['gender'] = segment_data[3]
+
+
+@matches_segment('SE')
+def parse_se_segment(segment_data, data_context, data_cache):
+    """
+    Parses
+    :param segment_data:
+    :param data_context:
+    :param data_cache:
+    """
+    data_context['is_transaction_complete'] = True
