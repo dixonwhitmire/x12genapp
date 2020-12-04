@@ -1,5 +1,3 @@
-import contextlib
-
 from x12genapp.x12 import UnsupportedTransactionException, InvalidControlSegment, SUPPORTED_TRANSACTION_CODES
 
 
@@ -59,7 +57,6 @@ class X12Reader:
         segment_fields = transaction_segment.split(self.x12_delimiters.element_separator)
         return segment_fields[1]
 
-    @contextlib.contextmanager
     def read_segment(self):
         """
         :return: the tokens for the current X12 segment
