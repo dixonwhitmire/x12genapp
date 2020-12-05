@@ -15,8 +15,28 @@ Content-Type: application/json
   "x12": "ISA*00*          *00*          *ZZ*890069730      *ZZ*154663145<etc>"
 }
 ```
+
+The response uses the same format as the request.
+```shell script
+HTTP 1.1
+Content-Type: application/json
+
+{
+  "x12": "ISA*00*          *00*          *ZZ*890069730      *ZZ*154663145<etc>",
+  "x12_transaction_code": "271"
+}
+```
+
+OpenAPI documentation is available at `http://<host>/docs`
+
 Transaction sets supported include:
 - 270/271 for Insurance Eligibility Verification
+
+## Endpoints
+| Endpoint | Description |
+| -------- | ----------- |
+| http://<host>:8080/docs | OpenAPI documentation |
+| http://<host>:8080/x12 | The X12 message POST endpoint |
 
 ## Eligibility Check (270/271) Processing
 The eligibility check processing workflow consists of the following steps:
@@ -55,4 +75,8 @@ pytest
 ```
 
 ## Container Support
-Coming soon!
+Build and run the container image
+```
+docker build -t x12genapp .
+docker run --rm --name x12genapp -p 8080:80 -d x12genapp
+```
