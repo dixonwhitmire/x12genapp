@@ -10,9 +10,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Flask==1.1.2',
-        'requests==2.25.0',
-        'simplejson==3.17.2'
+        'fastapi==0.62.0',
+        'uvicorn==0.12.3',
+        'requests==2.25.0'
     ],
     extras_require={
       'test': ['pytest==6.1.2', 'coverage==5.3']
