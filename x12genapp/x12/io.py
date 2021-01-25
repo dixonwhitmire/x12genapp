@@ -1,6 +1,7 @@
 from x12genapp.x12 import (InvalidControlSegment,
                            SUPPORTED_TRANSACTION_CODES,
                            UnsupportedTransactionException)
+from typing import List
 
 
 class X12MessageDelimiters:
@@ -12,7 +13,7 @@ class X12MessageDelimiters:
     ISA_REPETITION_SEPARATOR = 82
     ISA_SEGMENT_TERMINATOR = 105
 
-    def parse_isa_segment(self, x12_message):
+    def parse_isa_segment(self, x12_message: str):
         """
         Parses the ISA "control" segment and sets the delimiters used in the x12 message.
         :param x12_message: The x12 message/payload
@@ -26,7 +27,7 @@ class X12MessageDelimiters:
         self.repetition_separator = isa_segment[self.ISA_REPETITION_SEPARATOR]
         self.segment_terminator = isa_segment[self.ISA_SEGMENT_TERMINATOR]
 
-    def __init__(self, x12_message):
+    def __init__(self, x12_message: str):
         """
         Creates an instance of X12MessageDelimiters
         :param x12_message: the incoming x12 message
@@ -41,7 +42,7 @@ class X12Reader:
     """
     Reads segments from a X12 Message Stream
     """
-    def __init__(self, x12_message):
+    def __init__(self, x12_message: str):
         x12_input = x12_message.replace('\n', '')
         self.x12_delimiters = X12MessageDelimiters(x12_input)
         self.x12_data = [s for s in x12_input.split(self.x12_delimiters.segment_terminator) if s != '']
@@ -50,7 +51,7 @@ class X12Reader:
         if self.transaction_code not in SUPPORTED_TRANSACTION_CODES:
             raise UnsupportedTransactionException(f'transaction {self.transaction_code} is not supported')
 
-    def parse_transaction_code(self):
+    def parse_transaction_code(self) -> str:
         """
         Parses the X12 transaction code from the X12 message stream
         :return: the transaction code
@@ -59,7 +60,7 @@ class X12Reader:
         segment_fields = transaction_segment.split(self.x12_delimiters.element_separator)
         return segment_fields[1]
 
-    def read_segment(self):
+    def read_segment(self) -> List:
         """
         :return: the tokens for the current X12 segment
         """

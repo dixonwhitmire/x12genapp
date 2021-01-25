@@ -4,20 +4,20 @@ from x12genapp.x12.io import (X12MessageDelimiters,
 from x12genapp.x12 import InvalidControlSegment
 
 
-def test_message_delimiters(x12_270_basic_message):
+def test_message_delimiters(x12_270_basic_message: str):
     delimiters = X12MessageDelimiters(x12_270_basic_message.replace('\n', ''))
     assert delimiters.element_separator == '*'
     assert delimiters.repetition_separator == '|'
     assert delimiters.segment_terminator == '~'
 
 
-def test_message_delimiters_exception(x12_270_basic_message):
+def test_message_delimiters_exception(x12_270_basic_message: str):
     invalid_message = x12_270_basic_message.replace('\n', '')[0:50]
     with pytest.raises(InvalidControlSegment):
         X12MessageDelimiters(invalid_message)
 
 
-def test_message_reader(x12_270_basic_message):
+def test_message_reader(x12_270_basic_message: str):
     reader = X12Reader(x12_270_basic_message)
     assert reader.x12_delimiters.element_separator == '*'
     assert reader.x12_delimiters.repetition_separator == '|'

@@ -1,7 +1,7 @@
 from tests import client
 
 
-def test_x12_post(x12_270_basic_message):
+def test_x12_post(x12_270_basic_message: str):
     response = client.post('/x12', json={'x12': x12_270_basic_message})
     assert response.status_code == 200
 

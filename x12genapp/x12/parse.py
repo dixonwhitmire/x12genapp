@@ -2,8 +2,10 @@ from x12genapp.x12.io import X12Reader
 from x12genapp.x12.rules import load_rules
 from x12genapp.x12.model import X12Demographics
 
+from typing import Tuple
 
-def parse(x12_message):
+
+def parse(x12_message: str) -> Tuple:
     """
     Parses a X12 message into a demographic data structure
     :param x12_message: The x12 message payload
@@ -32,10 +34,11 @@ def parse(x12_message):
     return x12_demographics
 
 
-def create_271_message(x12_demographics):
+def create_271_message(x12_demographics: Tuple) -> str:
     """
     Creates a 271 message by applying x12 demographics to a template
     :param x12_demographics
+    :return: x12 message
     """
     data = x12_demographics._asdict()
     data = {k: '' if v is None else v for k, v in data.items()}

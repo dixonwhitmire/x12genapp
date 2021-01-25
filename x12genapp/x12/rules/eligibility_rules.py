@@ -1,9 +1,11 @@
 from x12genapp.x12.rules import matches_segment
 from x12genapp.x12.model import X12DemographicFields
+from typing import (Dict,
+                    List)
 
 
 @matches_segment('ST')
-def parse_transaction_set(segment_data, data_context, data_cache):
+def parse_transaction_set(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses a ST (transaction set) segment.
     Example: ST*270*0001*005010X279A1~
@@ -19,7 +21,7 @@ def parse_transaction_set(segment_data, data_context, data_cache):
 
 
 @matches_segment('HL', {3: '22'})
-def parse_subscriber_hl_segment(segment_data, data_context, data_cache):
+def parse_subscriber_hl_segment(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses a HL (hierarchical level) Subscriber Segment:
     Example: HL*3*2*22*0
@@ -32,7 +34,7 @@ def parse_subscriber_hl_segment(segment_data, data_context, data_cache):
 
 
 @matches_segment('HL', {3: '23'})
-def parse_dependent_hl_segment(segment_data, data_context, data_cache):
+def parse_dependent_hl_segment(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses a HL (hierarchical level) Dependent Segment:
     Example: HL*3*2*23*0~
@@ -45,7 +47,7 @@ def parse_dependent_hl_segment(segment_data, data_context, data_cache):
 
 
 @matches_segment('TRN')
-def parse_trn_segment(segment_data, data_context, data_cache):
+def parse_trn_segment(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses a TRN (trace number) segment:
     Example: TRN*1*1*1453915417~
@@ -58,7 +60,7 @@ def parse_trn_segment(segment_data, data_context, data_cache):
 
 
 @matches_segment('NM1')
-def parse_nm1_segment(segment_data, data_context, data_cache):
+def parse_nm1_segment(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses a NM1 (name) segment for a subscriber or dependent
     Example: NM1*IL*1*DOE*JOHN*L**IV*MI*11122333301~
@@ -84,7 +86,7 @@ def parse_nm1_segment(segment_data, data_context, data_cache):
 
 
 @matches_segment('REF', {1: 'IL'})
-def parse_group_number(segment_data, data_context, data_cache):
+def parse_group_number(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses a REF segment used to convey the IL (group number) for the insured
     Example: REF*IL*90210~
@@ -98,7 +100,7 @@ def parse_group_number(segment_data, data_context, data_cache):
 
 
 @matches_segment('N3')
-def parse_n3_segment(segment_data, data_context, data_cache):
+def parse_n3_segment(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses a N3 segment (address location)
     Example: N3*1400 Anywhere Lane*Apt 215~
@@ -115,7 +117,7 @@ def parse_n3_segment(segment_data, data_context, data_cache):
 
 
 @matches_segment('N4')
-def parse_n4_segment(segment_data, data_context, data_cache):
+def parse_n4_segment(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses a N4 segment (address geographic location)
     Example: N4*Standard City*SC*90210~
@@ -134,7 +136,7 @@ def parse_n4_segment(segment_data, data_context, data_cache):
 
 
 @matches_segment('DMG')
-def parse_dmg_segment(segment_data, data_context, data_cache):
+def parse_dmg_segment(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses a DMG segment containing additional demographics (birth data and gender)
     Example: DMG*D8*19900515*F~
@@ -152,7 +154,7 @@ def parse_dmg_segment(segment_data, data_context, data_cache):
 
 
 @matches_segment('SE')
-def parse_se_segment(segment_data, data_context, data_cache):
+def parse_se_segment(segment_data: List, data_context: Dict, data_cache: Dict):
     """
     Parses
     :param segment_data:
