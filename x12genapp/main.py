@@ -17,11 +17,18 @@ class X12ResponsePayload(X12RequestPayload):
 
 @app.post('/x12', response_model=X12ResponsePayload)
 def post_x12(x12_payload: X12RequestPayload):
+    """
+    Posts a x12 eligibility transaction to the demo service, returning a 271
+    response.
+    """
     x12_demographics = parse(x12_payload.x12)
 
+    patient_result = {'data': 'some-stuff'}
+    is_existing_patient = bool(patient_result)
+
     response_data = {
-        'x12': create_271_message(x12_demographics),
-        'x12_transaction_code': '271'
+        'x12_transaction_code': '271',
+        'x12': create_271_message(x12_demographics, is_existing_patient)
     }
 
     x12_response = X12ResponsePayload(**response_data)
