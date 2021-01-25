@@ -1,5 +1,6 @@
 import pytest
-from x12genapp.x12.io import X12MessageDelimiters, X12Reader
+from x12genapp.x12.io import (X12MessageDelimiters,
+                              X12Reader)
 from x12genapp.x12 import InvalidControlSegment
 
 

@@ -1,4 +1,6 @@
-from x12genapp.x12 import UnsupportedTransactionException, InvalidControlSegment, SUPPORTED_TRANSACTION_CODES
+from x12genapp.x12 import (InvalidControlSegment,
+                           SUPPORTED_TRANSACTION_CODES,
+                           UnsupportedTransactionException)
 
 
 class X12MessageDelimiters:

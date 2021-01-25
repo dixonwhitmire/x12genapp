@@ -1,4 +1,5 @@
-from x12genapp.x12.rules import load_rules, transaction_rules
+from x12genapp.x12.rules import (load_rules,
+                                 transaction_rules)
 from x12genapp.x12.model import X12DemographicFields
 
 

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from x12genapp.x12.parse import parse, create_271_message
+from x12genapp.x12.parse import (create_271_message,
+                                 parse)
 
 
 app = FastAPI()
