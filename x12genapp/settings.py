@@ -5,10 +5,11 @@ class Settings(BaseSettings):
     """
     X12 Gen App settings.
     Each setting field defines an environment variable, with a meaningful default.
-    Settings are overriden using environment variables.
+    Settings are overridden using environment variables.
     Example: is_passthrough_enabled is set using IS_PASSTHROUGH_ENABLED
     """
     # passthrough returns a 271 response where the member has insurance coverage
+    # this bypasses the genapp customer lookup
     is_passthrough_enabled: bool = False
 
     # genapp url settings
@@ -20,4 +21,4 @@ class Settings(BaseSettings):
 
     #
     genapp_customer_min_id: int = 1
-    genapp_customer_max_id: int = 10
+    genapp_customer_max_id: int = 5

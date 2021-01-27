@@ -3,8 +3,7 @@ from x12genapp.x12.rules import load_rules
 from x12genapp.x12.model import X12Demographics
 from x12genapp.x12.template import (get_271_existing_member,
                                     get_271_member_not_found)
-
-from typing import Tuple
+from dataclasses import asdict
 
 
 def parse(x12_message: str) -> X12Demographics:
@@ -43,7 +42,7 @@ def create_271_message(x12_demographics: X12Demographics, is_existing_member: bo
     :param is_existing_member
     :return: x12 message
     """
-    data = x12_demographics._asdict()
+    data = asdict(x12_demographics)
     data = {k: '' if v is None else v for k, v in data.items()}
 
     if is_existing_member:

@@ -1,6 +1,7 @@
 from x12genapp.x12.rules import (load_rules,
                                  transaction_rules)
-from x12genapp.x12.model import X12DemographicFields
+from x12genapp.x12.model import X12Demographics
+from dataclasses import asdict
 
 
 def test_load_rules():
@@ -19,8 +20,9 @@ def test_matched_rule_execution():
     st_rule = transaction_rules['270']['ST'][0]
     st_rule(segment_data, data_context, data_cache)
     assert data_context['is_subscriber'] is False
-    assert data_cache['subscriber'].keys() == set(X12DemographicFields)
-    assert data_cache['dependent'].keys() == set(X12DemographicFields)
+    x12_demographics = asdict(X12Demographics())
+    assert data_cache['subscriber'].keys() == x12_demographics.keys()
+    assert data_cache['dependent'].keys() == x12_demographics.keys()
 
 
 def test_unmatched_rule_execution():

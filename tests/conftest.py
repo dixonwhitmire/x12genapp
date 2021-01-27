@@ -5,6 +5,7 @@ Fixtures defined in this file are available to all unit tests
 import pytest
 from x12genapp.x12.model import X12Demographics
 from typing import Dict
+from dataclasses import asdict
 
 
 @pytest.fixture
@@ -123,5 +124,5 @@ def x12_270_demographics_with_address() -> X12Demographics:
 @pytest.fixture()
 def x12_270_fields(x12_270_basic_demographics) -> Dict:
     """x12 demographics fields conveyed as a dictionary. Unused fields are set to empty strings"""
-    data_fields = {k: '' if v is None else v for k, v in x12_270_basic_demographics._asdict().items()}
+    data_fields = {k: '' if v is None else v for k, v in asdict(x12_270_basic_demographics).items()}
     return data_fields

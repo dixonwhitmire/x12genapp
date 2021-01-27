@@ -1,7 +1,8 @@
 from x12genapp.x12.rules import matches_segment
-from x12genapp.x12.model import X12DemographicFields
+from x12genapp.x12.model import X12Demographics
 from typing import (Dict,
                     List)
+from dataclasses import asdict
 
 
 @matches_segment('ST')
@@ -15,8 +16,8 @@ def parse_transaction_set(segment_data: List, data_context: Dict, data_cache: Di
     """
     data_context['is_subscriber'] = False
     data_context['has_dependent'] = False
-    data_cache['subscriber'] = {field: None for field in X12DemographicFields}
-    data_cache['dependent'] = {field: None for field in X12DemographicFields}
+    data_cache['subscriber'] = asdict(X12Demographics())
+    data_cache['dependent'] = asdict(X12Demographics())
     data_context['is_transaction_complete'] = False
 
 

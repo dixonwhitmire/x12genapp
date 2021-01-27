@@ -15,7 +15,11 @@ setup(
         'requests==2.25.0'
     ],
     extras_require={
-      'test': ['pytest==6.1.2', 'coverage==5.3']
+      'test': [
+          'pytest==6.1.2',
+          'coverage==5.3',
+          'responses==0.12.1'
+      ]
     },
     classifiers=[
         "Domain :: Health Care :: X12"

@@ -27,9 +27,6 @@ def post_x12(x12_payload: X12RequestPayload):
     x12_demographics = parse(x12_payload.x12)
     is_existing_patient = True if settings.is_passthrough_enabled else is_existing_member(x12_demographics)
 
-    if settings.is_passthrough_enabled:
-        is_existing_patient = True
-
     response_data = {
         'x12_transaction_code': '271',
         'x12': create_271_message(x12_demographics, is_existing_patient)

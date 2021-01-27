@@ -1,6 +1,7 @@
 from x12genapp.x12.rules.eligibility_rules import *
 import pytest
 from typing import Dict
+from dataclasses import asdict
 
 @pytest.fixture
 def data_context() -> Dict:
@@ -10,8 +11,8 @@ def data_context() -> Dict:
 @pytest.fixture
 def data_cache() -> Dict:
     return {
-        'subscriber': {field: None for field in X12DemographicFields},
-        'dependent': {field: None for field in X12DemographicFields}
+        'subscriber': asdict(X12Demographics()),
+        'dependent': asdict(X12Demographics())
     }
 
 
@@ -23,8 +24,8 @@ def test_parse_transaction_set():
 
     assert data_context['is_subscriber'] is False
     assert data_context['has_dependent'] is False
-    assert data_cache['subscriber'].keys() == set(X12DemographicFields)
-    assert data_cache['dependent'].keys() == set(X12DemographicFields)
+    assert data_cache['subscriber'].keys() == asdict(X12Demographics()).keys()
+    assert data_cache['dependent'].keys() == asdict(X12Demographics()).keys()
 
 
 def test_parse_subscriber_hl_segment_no_dependent(data_context: Dict):
