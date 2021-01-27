@@ -7,7 +7,7 @@ from x12genapp.x12.template import (get_271_existing_member,
 from typing import Tuple
 
 
-def parse(x12_message: str) -> Tuple:
+def parse(x12_message: str) -> X12Demographics:
     """
     Parses a X12 message into a demographic data structure
     :param x12_message: The x12 message payload
@@ -36,7 +36,7 @@ def parse(x12_message: str) -> Tuple:
     return x12_demographics
 
 
-def create_271_message(x12_demographics: Tuple, is_existing_member: bool) -> str:
+def create_271_message(x12_demographics: X12Demographics, is_existing_member: bool) -> str:
     """
     Creates a 271 message by applying x12 demographics to a template
     :param x12_demographics

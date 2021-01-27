@@ -17,3 +17,7 @@ class Settings(BaseSettings):
 
     # genapp services/endpoints
     genapp_customer_lookup: str = '/Customer/Inq'
+
+    #
+    genapp_customer_min_id: int = 1
+    genapp_customer_max_id: int = 10
