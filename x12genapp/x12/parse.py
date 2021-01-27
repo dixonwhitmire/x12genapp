@@ -1,8 +1,8 @@
 from x12genapp.x12.io import X12Reader
 from x12genapp.x12.rules import load_rules
 from x12genapp.x12.model import X12Demographics
-from x12genapp.x12.template import (get_271_response_existing_member,
-                                    get_271_response_member_not_found)
+from x12genapp.x12.template import (get_271_existing_member,
+                                    get_271_member_not_found)
 
 from typing import Tuple
 
@@ -47,6 +47,6 @@ def create_271_message(x12_demographics: Tuple, is_existing_member: bool) -> str
     data = {k: '' if v is None else v for k, v in data.items()}
 
     if is_existing_member:
-        return get_271_response_existing_member(data)
+        return get_271_existing_member(data)
 
-    return get_271_response_member_not_found(data)
+    return get_271_member_not_found(data)

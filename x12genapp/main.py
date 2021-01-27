@@ -2,7 +2,9 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from x12genapp.x12.parse import (create_271_message,
                                  parse)
+from x12genapp.settings import Settings
 
+settings = Settings()
 
 app = FastAPI()
 
@@ -22,9 +24,10 @@ def post_x12(x12_payload: X12RequestPayload):
     response.
     """
     x12_demographics = parse(x12_payload.x12)
+    is_existing_patient = True
 
-    patient_result = {'data': 'some-stuff'}
-    is_existing_patient = bool(patient_result)
+    if not settings.is_passthrough_enabled:
+        is_existing_patient = False
 
     response_data = {
         'x12_transaction_code': '271',

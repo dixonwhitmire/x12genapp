@@ -1,7 +1,7 @@
 from typing import Dict
 
 
-def get_271_response_existing_member(demographics: Dict) -> str:
+def get_271_existing_member(demographics: Dict) -> str:
     """
     Returns an Eligibility/271 response where a member has current insurance coverage.
     :param demographics: Demographic fields included within the x12 response.
@@ -31,7 +31,7 @@ SE*20*4321~""".replace('\n', '')
     return x12
 
 
-def get_271_response_member_not_found(demographics: Dict) -> str:
+def get_271_member_not_found(demographics: Dict) -> str:
     """
     Returns an Eligibility/271 response where a member is not found.
     :param demographics: Demographic fields included within the x12 response.

@@ -1,15 +1,14 @@
 from x12genapp.x12.rules.eligibility_rules import *
 import pytest
-from typing import (Dict,
-                    List)
+from typing import Dict
 
 @pytest.fixture
-def data_context():
+def data_context() -> Dict:
     return {'is_subscriber': False, 'has_dependent': False}
 
 
 @pytest.fixture
-def data_cache():
+def data_cache() -> Dict:
     return {
         'subscriber': {field: None for field in X12DemographicFields},
         'dependent': {field: None for field in X12DemographicFields}
