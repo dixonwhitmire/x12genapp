@@ -1,10 +1,19 @@
-from x12genapp.cache import (fetch_genapp_records,
-                             parse_genapp_customer)
-from x12genapp.main import settings
+from x12genapp.genapp import (get_customers,
+                              parse_genapp_customer)
+from x12genapp.config import AppSettings
 from x12genapp.x12.model import X12Demographics
 import pytest
 import json
 import responses
+
+
+@pytest.fixture
+def app_settings() -> AppSettings:
+    settings = AppSettings()
+    # override defaults for test cases
+    settings.genapp_customer_min_id = 1
+    settings.genapp_customer_max_id = 2
+    return settings
 
 
 @pytest.fixture
@@ -50,25 +59,29 @@ def test_parse_genapp_customer_match(genapp_first_customer_response):
 
 
 @responses.activate
-def test_fetch_genapp_records(genapp_first_customer_response, genapp_second_customer_response):
-    """Tests fetch_genapp_records where two records are returned"""
-    record_lookup_url = f'{settings.genapp_host}{settings.genapp_base_url}{settings.genapp_customer_lookup}'
+def test_get_customers(genapp_first_customer_response,
+                       genapp_second_customer_response,
+                       app_settings,
+                       monkeypatch):
+    """Tests get_customers where two records are returned"""
+    monkeypatch.setattr('x12genapp.genapp.get_app_settings', lambda: app_settings)
 
+    lookup_url = f'{app_settings.genapp_base_url}{app_settings.genapp_customer_lookup}'
     responses.add(
         responses.GET,
-        record_lookup_url + '/1',
+        lookup_url + '/1',
         json=json.loads(genapp_first_customer_response)
     )
 
     responses.add(
         responses.GET,
-        record_lookup_url + '/2',
+        lookup_url + '/2',
         json=json.loads(genapp_second_customer_response)
     )
 
-    actual = fetch_genapp_records(record_lookup_url, 1, 2)
+    actual = get_customers()
 
     assert len(actual) == 2
     assert len(responses.calls) == 2
-    assert responses.calls[0].request.url == record_lookup_url + '/1'
-    assert responses.calls[1].request.url == record_lookup_url + '/2'
+    assert responses.calls[0].request.url == lookup_url + '/1'
+    assert responses.calls[1].request.url == lookup_url + '/2'

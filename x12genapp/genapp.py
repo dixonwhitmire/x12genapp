@@ -1,7 +1,10 @@
+from functools import lru_cache
+
 import requests
 from typing import (Dict,
                     Optional)
 from x12genapp.x12.model import X12Demographics
+from x12genapp.config import get_app_settings
 
 
 def parse_genapp_customer(genapp_record: Dict) -> Optional[X12Demographics]:
@@ -31,15 +34,16 @@ def parse_genapp_customer(genapp_record: Dict) -> Optional[X12Demographics]:
     return x12_demographics
 
 
-def fetch_genapp_records(endpoint_url: str, min_id: int, max_id: int) -> Dict:
+@lru_cache
+def load_customers(endpoint_url: str, min_id: int, max_id: int) -> Dict:
     """
-    Parses a range of genapp record using genapp record ids.
+    Parses a range of genapp customer records using genapp record ids.
     :param endpoint_url: The GenApp endpoint used to lookup records.
     :param min_id: The minimum id in the range.
     :param max_id: The maximum id in the range
     :return: Dictionary of X12Demographic models indexed by hash
     """
-    record_cache = {}
+    genapp_records = {}
 
     for i in range(min_id, max_id + 1, 1):
 
@@ -47,8 +51,17 @@ def fetch_genapp_records(endpoint_url: str, min_id: int, max_id: int) -> Dict:
         if response.ok:
             response_data = response.json()
             x12_demographics = parse_genapp_customer(response_data)
-            record_cache[hash(x12_demographics)] = x12_demographics
+            genapp_records[hash(x12_demographics)] = x12_demographics
         else:
             print(f'received a {response.status_code}: {response.text}')
 
-    return record_cache
+    return genapp_records
+
+
+def get_customers() -> Dict:
+    """Returns a range of genapp customers indexed by hash"""
+    settings = get_app_settings()
+    lookup_url = f'{settings.genapp_base_url}{settings.genapp_customer_lookup}'
+    return load_customers(lookup_url,
+                          settings.genapp_customer_min_id,
+                          settings.genapp_customer_max_id)

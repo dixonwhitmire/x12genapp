@@ -4,6 +4,7 @@ from dataclasses import (dataclass,
 
 @dataclass(unsafe_hash=True)
 class X12Demographics:
+    """X12 demographic and metadata fields"""
     trace_number: str = field(default=None, compare=False)
     last_name: str = field(default=None, compare=True)
     first_name: str = field(default=None, compare=True)

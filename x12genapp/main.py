@@ -1,36 +1,31 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from x12genapp.x12.parse import (create_271_message,
-                                 parse)
-from x12genapp.settings import Settings
-from x12genapp.services import is_existing_member
+from x12genapp.routes import (customers,
+                              x12)
 
-settings = Settings()
-
-app = FastAPI()
+from x12genapp.config import get_app_settings
+import uvicorn
 
 
-class X12RequestPayload(BaseModel):
-    x12: str
-
-
-class X12ResponsePayload(X12RequestPayload):
-    x12_transaction_code: str
-
-
-@app.post('/x12', response_model=X12ResponsePayload)
-def post_x12(x12_payload: X12RequestPayload):
+def get_app() -> FastAPI:
     """
-    Posts a x12 eligibility transaction to the demo service, returning a 271
-    response.
+    Configures the Fast API application
     """
-    x12_demographics = parse(x12_payload.x12)
-    is_existing_patient = True if settings.is_passthrough_enabled else is_existing_member(x12_demographics)
+    app = FastAPI()
+    app.include_router(x12.router, prefix='/x12')
+    app.include_router(customers.router, prefix='/customers')
+    return app
 
-    response_data = {
-        'x12_transaction_code': '271',
-        'x12': create_271_message(x12_demographics, is_existing_patient)
+
+app = get_app()
+
+if __name__ == '__main__':
+    """Launches the uvicorn application"""
+    settings = get_app_settings()
+
+    uvicorn_params = {
+        'host': settings.uvicorn_host,
+        'port': settings.uvicorn_port,
+        'reload': settings.uvicorn_reload
     }
 
-    x12_response = X12ResponsePayload(**response_data)
-    return x12_response
+    uvicorn.run(settings.uvicorn_app, **uvicorn_params)
