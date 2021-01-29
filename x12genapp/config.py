@@ -12,13 +12,11 @@ class AppSettings(BaseSettings):
     """
     uvicorn_app: str = 'x12genapp.main:app'
     uvicorn_host: str = '0.0.0.0'
-    uvicorn_port: int = 8000
-    uvicorn_reload: bool = True
-
-    api_version: str = 'v2'
+    uvicorn_port: int = 8080
+    uvicorn_reload: bool = False
 
     # passthrough bypasses the genapp customer lookup and returns a 271 response indicating coverage
-    is_passthrough_enabled: bool = True
+    is_passthrough_enabled: bool = False
 
     # genapp url/endpoint settings
     genapp_base_url: str = 'http://localhost:9990/Genapp'

@@ -1,5 +1,9 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
+FROM python:3.8-alpine
 
-ENV MODULE_NAME="x12genapp.main"
+COPY ./ /x12genapp
 
-COPY ./ /app
+WORKDIR /x12genapp
+
+RUN python3 setup.py install
+
+CMD ["python3", "x12genapp/main.py"]
