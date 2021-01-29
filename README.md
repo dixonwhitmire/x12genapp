@@ -113,5 +113,5 @@ pytest
 Build and run the container image
 ```
 docker build -t x12genapp .
-docker run --rm --name x12genapp -p 8080:80 -d x12genapp
+docker run --rm --name x12genapp -p 8080:8080 -e IS_PASSTHROUGH_ENABLED=True x12genapp
 ```
