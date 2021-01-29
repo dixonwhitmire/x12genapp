@@ -15,6 +15,42 @@ class GenAppCustomer(BaseModel):
     birth_date: str
     provenance_id: int
 
+    class Config:
+        schema_extra = {
+            'example': [
+                {
+                    'first_name': 'ANDREW',
+                    'last_name': 'PANDY',
+                    'birth_date': '1950-07-11',
+                    'provenance_id': 1
+                },
+                {
+                    'first_name': 'SCOTT',
+                    'last_name': 'TRACEY',
+                    'birth_date': '1965-09-30',
+                    'provenance_id': 2
+                },
+                {
+                    'first_name': 'JOHN',
+                    'last_name': 'NOAKES',
+                    'birth_date': '1934-03-06',
+                    'provenance_id': 3
+                },
+                {
+                    'first_name': 'LOUIS',
+                    'last_name': 'PUG',
+                    'birth_date': '1969-09-06',
+                    'provenance_id': 4
+                },
+                {
+                    'first_name': 'GRAHAM',
+                    'last_name': 'CUTHBERT',
+                    'birth_date': '1967-01-03',
+                    'provenance_id': 5
+                }
+            ]
+        }
+
 
 @router.get('', response_model=List[GenAppCustomer])
 def get_all(app_settings: AppSettings = Depends(get_app_settings)):
