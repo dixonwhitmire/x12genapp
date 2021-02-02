@@ -28,6 +28,7 @@ def parse_genapp_customer(genapp_record: Dict) -> Optional[X12Demographics]:
         'birth_date': genapp_customer.get('CA_DOB', '')
     }
 
+    data_fields['birth_date'] = data_fields['birth_date'].replace('-', '')
     data_fields = {k: v for k, v in data_fields.items() if v != '' or v is not None}
 
     x12_demographics = X12Demographics(**data_fields)

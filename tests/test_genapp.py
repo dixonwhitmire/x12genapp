@@ -47,7 +47,7 @@ def test_parse_genapp_customer_match(genapp_first_customer_response):
     expected.provenance_id = 1
     expected.first_name = 'ANDREW'
     expected.last_name = 'PANDY'
-    expected.birth_date = '1950-07-11'
+    expected.birth_date = '19500711'
 
     matched_response = json.loads(genapp_first_customer_response)
     actual = parse_genapp_customer(matched_response)

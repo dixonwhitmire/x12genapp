@@ -21,31 +21,31 @@ class GenAppCustomer(BaseModel):
                 {
                     'first_name': 'ANDREW',
                     'last_name': 'PANDY',
-                    'birth_date': '1950-07-11',
+                    'birth_date': '19500711',
                     'provenance_id': 1
                 },
                 {
                     'first_name': 'SCOTT',
                     'last_name': 'TRACEY',
-                    'birth_date': '1965-09-30',
+                    'birth_date': '19650930',
                     'provenance_id': 2
                 },
                 {
                     'first_name': 'JOHN',
                     'last_name': 'NOAKES',
-                    'birth_date': '1934-03-06',
+                    'birth_date': '19340306',
                     'provenance_id': 3
                 },
                 {
                     'first_name': 'LOUIS',
                     'last_name': 'PUG',
-                    'birth_date': '1969-09-06',
+                    'birth_date': '19690906',
                     'provenance_id': 4
                 },
                 {
                     'first_name': 'GRAHAM',
                     'last_name': 'CUTHBERT',
-                    'birth_date': '1967-01-03',
+                    'birth_date': '19670103',
                     'provenance_id': 5
                 }
             ]

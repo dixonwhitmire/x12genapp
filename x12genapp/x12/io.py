@@ -1,7 +1,11 @@
 from x12genapp.x12 import (InvalidControlSegment,
+                           InvalidEnvelope,
                            SUPPORTED_TRANSACTION_CODES,
                            UnsupportedTransactionException)
 from typing import List
+import re
+
+X12_ENVELOPE_PATTERN = re.compile('^(ISA).*(GS).*(ST).*(SE).*(GE).*(IEA).*$')
 
 
 class X12MessageDelimiters:
@@ -44,6 +48,10 @@ class X12Reader:
     """
     def __init__(self, x12_message: str):
         x12_input = x12_message.replace('\n', '')
+
+        if not X12_ENVELOPE_PATTERN.match(x12_input):
+            raise InvalidEnvelope('X12 message does not contain the required control segments')
+
         self.x12_delimiters = X12MessageDelimiters(x12_input)
         self.x12_data = [s for s in x12_input.split(self.x12_delimiters.segment_terminator) if s != '']
         self.transaction_code = self.parse_transaction_code()

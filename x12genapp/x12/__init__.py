@@ -11,6 +11,13 @@ class UnsupportedTransactionException(Exception):
 
 class InvalidControlSegment(Exception):
     """
-    Raised when a X12 message as an invalid control segment (ISA, GS, GE, or IEA)
+    Raised when a X12 message has an invalid control segment (ISA, GS, GE, or IEA)
+    """
+    pass
+
+
+class InvalidEnvelope(Exception):
+    """
+    Raised when a X12 message does not contain transaction header (ST) or footer (SE) segments.
     """
     pass
