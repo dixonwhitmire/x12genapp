@@ -6,7 +6,7 @@ name: X12Genapp CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
