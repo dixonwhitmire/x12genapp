@@ -35,7 +35,7 @@ def parse_genapp_customer(genapp_record: Dict) -> Optional[X12Demographics]:
     return x12_demographics
 
 
-@lru_cache
+@lru_cache(maxsize=128)
 def load_customers(endpoint_url: str, min_id: int, max_id: int) -> Dict:
     """
     Parses a range of genapp customer records using genapp record ids.
