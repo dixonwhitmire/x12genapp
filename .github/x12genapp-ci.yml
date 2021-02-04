@@ -1,0 +1,45 @@
+# (C) Copyright IBM Corp. 2020
+# SPDX-License-Identifier: Apache-2.0
+
+name: X12Genapp CI
+# Runs CI tests when a PR is submitted against the main branch
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    name: X12Genapp CI - OS ${{ matrix.os }} Python Version 3.8
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Python 3.8 Setup
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - uses: actions/cache@v2
+        if: startsWith(runner.os, 'Linux')
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/setup.py') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - uses: actions/cache@v2
+        if: startsWith(runner.os, 'Windows')
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/setup.py') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: X12Genapp CI Install
+        run: |
+          pip install -e .[test]
+      - name: Run unit tests
+        run: |
+          pytest -vv
